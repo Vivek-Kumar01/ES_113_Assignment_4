@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Bonds Redeemed Data</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Electoral Bonds Redemption Data</h1>
+
+<form action="/redeemdata" method="post">
+    <div class="container">
+        <div class="input-group">
+            <p>Enter a Date of Encashment (yyyy-mm-dd):</p>
+            <input type="text" name="dateofencash">
+        </div>
+        <div class="input-group">
+            <p>Select the name of the political party:</p>
+            <select name="party">
+                <option value="">Click here to select a political party</option>
+                {% for p in temp2 %}
+                <option value="{{ p[0] }}">{{ p[0] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group">
+            <p>Enter a bond number:</p>
+            <input type="number" name="bondnumber2">
+        </div>
+    <button>Get data</button>
+    </div>
+</form>
+<h3>Note: To view full data, leave all the fields blank and click on "Get data".</h3>
+{% if data2 == [] %}
+    <h5>Data does not exist.</h5>
+{% endif %}
+
+{% if count2 > 0 %}
+    <p id="count">
+        {{ count2 }} Results
+    </p>
+{% endif %}
+
+<table>
+    <tr>
+        <th>Sr No</th>
+        <th>Date of Encashment</th>
+        <th>Name of the Political Party</th>
+        <th>Account No of the Party</th>
+        <th>Prefix</th>
+        <th>Bond Number</th>
+        <th>Denominations</th>
+        <th>Pay Branch Code</th>
+        <th>Pay Teller</th>
+    </tr>
+    {% for val2 in data2 %}
+        <tr>
+            <td>{{ val2.Sr_No }}</td>
+            <td>{{ val2.Date_of_Encashment }}</td>
+            <td>{{ val2.Name_of_the_political_party }}</td>
+            <td>{{ val2.Account_No_of_the_Party }}</td>
+            <td>{{ val2.Prefix }}</td>
+            <td>{{ val2.Bond_Number }}</td>
+            <td>{{ val2.Denominations  }}</td>
+            <td>{{ val2.Pay_Branch_Code }}</td>
+            <td>{{ val2.Pay_Teller }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

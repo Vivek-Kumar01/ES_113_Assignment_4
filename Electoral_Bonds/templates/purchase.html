@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Bonds Purchased Data</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Electoral Bonds Purchase Data</h1>
+
+<form action="/purchasedata" method="post">
+    <div class="container">
+        <div class="input-group">
+            <p>Select a company/individual:</p>
+            <select name="company">
+                <option value="">Click here to select a company/individual</option>
+                {% for com in temp %}
+                <option value="{{ com[0] }}">{{ com[0] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group">
+            <p>Enter a Reference Number:</p>
+            <input type="text" name="reference">
+        </div>
+        <div class="input-group">
+            <p>Enter a bond number:</p>
+            <input type="number" name="bondnumber">
+        </div>
+        <div class="input-group">
+            <p>Enter a Journal Date (yyyy-mm-dd):</p>
+            <input type="text" name="journaldate">
+        </div>
+        <div class="input-group">
+            <p>Enter a Date of Purchase (yyyy-mm-dd):</p>
+            <input type="text" name="dateofpurchase">
+        </div>
+        <div class="input-group">
+            <p>Enter a Date of Expiry (yyyy-mm-dd):</p>
+            <input type="text" name="dateofexpiry">
+        </div>
+    <button>Get data</button>
+    </div>
+</form>
+<h3>Note: To view full data, leave all the fields blank and click on "Get data".</h3>
+{% if data == [] %}
+    <h5>Data does not exist.</h5>
+{% endif %}
+
+{% if count > 0 %}
+    <p id="count">
+        {{ count }} Results
+    </p>
+{% endif %}
+
+<table>
+    <tr>
+        <th>Sr No</th>
+        <th>Reference No URN</th>
+        <th>Journal Date</th>
+        <th>Date of Purchase</th>
+        <th>Date of Expiry</th>
+        <th>Name of the Purchaser</th>
+        <th>Prefix</th>
+        <th>Bond Number</th>
+        <th>Denominations</th>
+        <th>Issue Branch Code</th>
+        <th>Issue Teller</th>
+        <th>Status</th>
+    </tr>
+    {% for val in data %}
+        <tr>
+            <td>{{ val.Sr_No }}</td>
+            <td>{{ val.Reference_No_URN }}</td>
+            <td>{{ val.Journal_Date }}</td>
+            <td>{{ val.Date_of_Purchase }}</td>
+            <td>{{ val.Date_of_Expiry }}</td>
+            <td>{{ val.Name_of_the_Purchaser }}</td>
+            <td>{{ val.Prefix }}</td>
+            <td>{{ val.Bond_Number }}</td>
+            <td>{{ val.Denominations }}</td>
+            <td>{{ val.Issue_Branch_Code }}</td>
+            <td>{{ val.Issue_Teller }}</td>
+            <td>{{ val.Status_ }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

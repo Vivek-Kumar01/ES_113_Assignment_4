@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Analysing Bonds</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Analysing Bonds</h1>
+<form action="/analyse" method="POST">
+    <div class="container">
+        <div class="input-group">
+            <p>Select a company name: </p>
+            <select name="company3">
+                <option value="">Click here to select a company/individual</option>
+                {% for c in companies %}
+                <option value="{{ c.Name_of_the_Purchaser }}">{{ c.Name_of_the_Purchaser }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group">
+            <p>Select a political party: </p>
+            <select name="party3">
+                <option value="">Click here to select a party</option>
+                {% for p in parties %}
+                <option value="{{ p.Name_of_the_political_party }}">{{ p.Name_of_the_political_party }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group">
+            <p>Enter the Bond number: </p>
+            <input type="number" name="bondnumber3">
+        </div>
+    <button>Get data</button>
+    </div>
+</form>
+
+<h3>Note: To view full joined data for each bond number, leave all the fields blank and click on "Get data".</h3>
+
+{% if data_an == [] %}
+    <h5>Data does not exist.</h5>
+{% endif %}
+
+{% if money > 0 %}
+    <p id="money">
+        Total Denominations: ₹ {{ money }}
+    </p>
+{% endif %}
+
+{% if count > 0 %}
+    <p id="count">
+        {{ count }} Results
+    </p>
+{% endif %}
+
+<table>
+    <tr>
+        <th>Sr No</th>
+        <th>Bond Number</th>
+        <th>Name of the company/individual</th>
+        <th>Name of the political party</th>
+        <th>Denominations</th>
+        <th>Date of Purchase</th>
+        <th>Date of Expiry</th>
+        <th>Date of Encashment</th>
+        <th>Status</th>
+    </tr>
+    {% for d in data_an %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ d.Bond_Number }}</td>
+        <td>{{ d.Name_of_the_Purchaser }}</td>
+        <td>{{ d.Name_of_the_political_party }}</td>
+        <td>{{ d.Denominations }}</td>
+        <td>{{ d.Date_of_Purchase }}</td>
+        <td>{{ d.Date_of_Expiry}}</td>
+        <td>{{ d.Date_of_Encashment}}</td>
+        <td>{{ d.Status_ }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
